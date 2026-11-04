@@ -1,0 +1,27 @@
+CÓMO ACTIVAR EL RANKING MUNDIAL DE PLUMAS LOCAS (gratis, unos 5 minutos)
+=========================================================================
+
+El juego guarda los récords en una base de datos gratuita de Google (Firebase).
+Solo hay que crearla una vez.
+
+1. Entra en https://console.firebase.google.com con tu cuenta de Google.
+2. Pulsa "Crear un proyecto" (o "Añadir proyecto"), ponle de nombre "plumas-locas"
+   y desactiva Google Analytics (no hace falta). Pulsa "Crear proyecto".
+3. En el menú de la izquierda: Compilación → Realtime Database → "Crear base de datos".
+   - Ubicación: Bélgica (europe-west1).
+   - Reglas de seguridad: "Empezar en modo bloqueado".
+4. Ve a la pestaña "Reglas", borra lo que haya, pega todo el contenido del archivo
+   reglas-firebase.json y pulsa "Publicar".
+   (Estas reglas solo dejan añadir récords nuevos: nadie puede borrar ni cambiar los de otros.)
+5. En la pestaña "Datos", copia la dirección que aparece arriba. Es parecida a:
+   https://plumas-locas-1234-default-rtdb.europe-west1.firebasedatabase.app
+6. Abre ranking-online.js con el Bloc de notas y pega esa dirección entre las comillas de  db: ''
+7. Sube a GitHub estos archivos: index.html, ranking-online.js y sw.js.
+
+Listo. En el juego, RANKING mostrará "RANKING MUNDIAL" y el botón "VER" cambia entre el
+mundial y el de ese dispositivo. En la portada sale quién tiene el récord mundial.
+
+Si alguien pone un nombre feo, puedes borrarlo en Firebase → Realtime Database → Datos
+(v1 → p son los patos, v1 → c el tiro al plato).
+
+El plan gratuito de Firebase (Spark) da de sobra para este juego.

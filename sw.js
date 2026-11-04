@@ -1,7 +1,7 @@
 /* Plumas Locas: permite instalar el juego como app y abrirlo sin internet.
    Primero intenta descargar la versión más nueva; si no hay conexión, usa la guardada. */
-var CACHE = 'plumas-locas-v2';
-var FILES = ['./', 'index.html', 'plumas-locas.html', 'three.min.js', 'peerjs.min.js', 'qrcode.min.js',
+var CACHE = 'plumas-locas-v3';
+var FILES = ['./', 'index.html', 'plumas-locas.html', 'three.min.js', 'peerjs.min.js', 'qrcode.min.js', 'ranking-online.js',
   'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
