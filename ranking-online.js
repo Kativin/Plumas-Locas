@@ -4,5 +4,5 @@
    db: 'https://plumas-locas-1234-default-rtdb.europe-west1.firebasedatabase.app'
    Si la dejas vacía, el juego funciona igual, solo con el ranking de cada dispositivo. */
 window.PL_ONLINE = {
-  db: 'https://console.firebase.google.com/u/0/project/plumas-locas/database/plumas-locas-default-rtdb/data/~2F'
+  db: 'https://plumas-locas-default-rtdb.europe-west1.firebasedatabase.app'
 };
