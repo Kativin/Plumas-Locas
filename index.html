@@ -30,6 +30,7 @@ html,body{margin:0;height:100%;background:#05070f;overflow:hidden;touch-action:n
 #load .bar{position:relative;width:320px;max-width:80vw;height:18px;border-radius:9px;background:#1b2448;margin-top:14px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.5),0 0 0 3px #2b3870}
 #load .bar i{display:block;height:100%;width:0;border-radius:9px;background:repeating-linear-gradient(-45deg,#ffd84a 0 12px,#f29b1d 12px 24px);background-size:34px 34px;animation:lstripe .8s linear infinite;transition:width .45s ease-out}
 @keyframes lstripe{0%{background-position:0 0}100%{background-position:34px 0}}
+#load .ver{position:absolute;bottom:14px;left:0;right:0;font-weight:800;font-size:14px;color:rgba(207,224,255,.6);letter-spacing:1px}
 #load .pct{margin-top:8px;font-family:'Luckiest Guy',Impact,sans-serif;font-size:20px;color:#ffe36e}
 @keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(330%)}}
 #load .btns{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
@@ -95,6 +96,7 @@ button.sec{background:linear-gradient(#3b4a86,#232c58);color:#fff;box-shadow:0 5
   <div id="loadMsg" class="s">Cargando escopeta…</div>
   <div id="loadBar" class="bar"><i id="loadFill"></i></div>
   <div id="loadPct" class="pct">0%</div>
+  <div id="loadVer" class="ver"></div>
   <div id="loadBtns" class="btns hide"><button id="lPhone">📱 Usar este móvil como pistola</button><button id="l2d" class="sec">Abrir versión 2D</button></div>
 </div>
 
@@ -184,7 +186,7 @@ var phoneMode=false,panelOpen=false;
 var UA=navigator.userAgent||'';
 var IS_TV=/Tizen|Web0S|WebOS|SMART-TV|SmartTV|BRAVIA|AFT[A-Z]|CrKey|Android TV|GoogleTV|HbbTV|NetCast|VIDAA|Roku|Large Screen|TV/i.test(UA)||(/Android/i.test(UA)&&!/Mobile/i.test(UA)&&!(navigator.maxTouchPoints>0));
 var IS_IOS=/iPhone|iPad|iPod/i.test(UA)||(/Macintosh/.test(UA)&&navigator.maxTouchPoints>1);
-var PL_VER='20261105162134';
+var PL_VER='20261105163845';
 var ROT=false,ROT_W='',READY=false;function VW(){return ROT?window.innerHeight:window.innerWidth;}function VH(){return ROT?window.innerWidth:window.innerHeight;}
 var IS_MOB=!IS_TV&&(IS_IOS||/Android|Mobile|Mobi/i.test(UA)||(navigator.maxTouchPoints>0&&Math.min(screen.width,screen.height)<820));
 /* ruido de valor para el terreno y la vegetación */
@@ -2113,6 +2115,8 @@ $('pcal').onclick=function(){beginCal();};
 $('ppause').onclick=function(){psend({t:'p'});};
 
 /* ================= ARRANQUE ================= */
+function verTxt(){var v=PL_VER;if(!/^\d{14}$/.test(v))return 'versión de pruebas';return 'Versión '+v.slice(6,8)+'/'+v.slice(4,6)+'/'+v.slice(0,4)+' · '+v.slice(8,10)+':'+v.slice(10,12);}
+(function(){var e=$('loadVer');if(e)e.textContent=verTxt();})();
 function hideLoad(){$('load').classList.add('hide');}
 function loadFail(msg){$('loadMsg').textContent=msg;$('loadBar').classList.add('hide');$('loadBtns').classList.remove('hide');}
 $('lPhone').onclick=function(){hideLoad();phoneInit('');};
