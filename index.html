@@ -186,7 +186,7 @@ var phoneMode=false,panelOpen=false;
 var UA=navigator.userAgent||'';
 var IS_TV=/Tizen|Web0S|WebOS|SMART-TV|SmartTV|BRAVIA|AFT[A-Z]|CrKey|Android TV|GoogleTV|HbbTV|NetCast|VIDAA|Roku|Large Screen|TV/i.test(UA)||(/Android/i.test(UA)&&!/Mobile/i.test(UA)&&!(navigator.maxTouchPoints>0));
 var IS_IOS=/iPhone|iPad|iPod/i.test(UA)||(/Macintosh/.test(UA)&&navigator.maxTouchPoints>1);
-var PL_VER='20261105163845';
+var PL_VER='20261105210934';
 var ROT=false,ROT_W='',READY=false;function VW(){return ROT?window.innerHeight:window.innerWidth;}function VH(){return ROT?window.innerWidth:window.innerHeight;}
 var IS_MOB=!IS_TV&&(IS_IOS||/Android|Mobile|Mobi/i.test(UA)||(navigator.maxTouchPoints>0&&Math.min(screen.width,screen.height)<820));
 /* ruido de valor para el terreno y la vegetación */
@@ -1146,7 +1146,7 @@ function layoutButtons(){
   if(G.paused){b.push({l:'CONTINUAR',f:function(){togglePause();}});b.push({l:'ESTILO: '+(RETRO.on?'RETRO 8 BITS':'3D REALISTA'),f:toggleRetro});b.push({l:'SALIR AL MENÚ',f:function(){goTitle();}});y0=310;}
   else if(G.phase==='title'){
     var back={l:'VOLVER',f:function(){G.menu='main';G.menuSel=0;layoutButtons();}};
-    if(G.menu==='opt'){b.push({l:'SONIDO: '+(A.on?'SÍ':'NO'),f:toggleSound});b.push({l:'ESTILO: '+(RETRO.on?'RETRO 8 BITS':'3D REALISTA'),f:toggleRetro});b.push({l:qLabel(),f:cycleQuality});b.push({l:'AYUDA PUNTERÍA: '+(OPT.kid?'SÍ (NIÑOS)':'NO'),f:toggleKid});b.push({l:'SENSIBILIDAD MÓVIL: '+SENSN[OPT.sens],f:cycleSens});b.push({l:'PANTALLA COMPLETA: '+(FS_AUTO?'AUTO':'NO'),f:toggleFs});if(INST)b.push({l:'INSTALAR COMO APP',f:installApp});b.push(back);y0=b.length>7?262:280;}
+    if(G.menu==='opt'){b.push({l:'SONIDO: '+(A.on?'SÍ':'NO'),f:toggleSound});b.push({l:'ESTILO: '+(RETRO.on?'RETRO 8 BITS':'3D REALISTA'),f:toggleRetro});b.push({l:qLabel(),f:cycleQuality});b.push({l:'AYUDA PUNTERÍA: '+(OPT.kid?'SÍ (NIÑOS)':'NO'),f:toggleKid});b.push({l:'SENSIBILIDAD MÓVIL: '+SENSN[OPT.sens],f:cycleSens});b.push({l:'PANTALLA COMPLETA: '+(FS_AUTO?'AUTO':'NO'),f:toggleFs});if(INST)b.push({l:'INSTALAR COMO APP',f:installApp});b.push({l:'BUSCAR ACTUALIZACIÓN',f:updManual});b.push(back);y0=b.length>8?226:b.length>7?256:280;}
     else if(G.menu==='rank'){if(onlOn())b.push({l:'VER: '+(ONL.view==='w'?'MUNDIAL':'ESTE DISPOSITIVO'),f:function(){ONL.view=ONL.view==='w'?'l':'w';lsSet('pl3_rv',ONL.view);onlRefresh();layoutButtons();}});b.push(back);y0=onlOn()?596:600;}
     else{var nc=netCount();b.push({l:'JUGAR · 1 PATO',pick:1,f:function(){pickMode(1);}});b.push({l:'JUGAR · 2 PATOS',pick:2,f:function(){pickMode(2);}});b.push({l:'TIRO AL PLATO',pick:3,f:function(){pickMode(3);}});
       if(G.pick)b.push({l:'PLAY',play:true,f:playPicked});
@@ -1214,11 +1214,11 @@ function drawTitle(c){
   if(G.menu==='rank'){drawRank(c);drawButtons(c);return;}
   logoWord(c,'PLUMAS',600,104,96,0);logoWord(c,'LOCAS',600,198,110,6);
   c.save();c.translate(905,150);c.rotate(-0.18+Math.sin(G.rt*3)*0.04);var s=1+Math.sin(G.rt*5)*0.04;c.scale(s,s);circ(c,0,0,62);var g=c.createRadialGradient(-15,-18,6,0,0,62);g.addColorStop(0,'#7fe3ff');g.addColorStop(1,'#1c6fd6');c.fillStyle=g;c.fill();c.lineWidth=6;c.strokeStyle=OUT;c.stroke();if(RETRO.on)txt(c,'8BIT',0,4,36,'#fff','center',7);else txt(c,'3D',0,4,64,'#fff','center',9);c.restore();
-  c.save();c.translate(600,276);c.rotate(Math.sin(G.rt*2)*0.02);rr(c,-215,-23,430,46,23);fst(c,'#d63b3b',4);txt(c,'¡CACERÍA DE PATOS!',0,2,26,'#fff','center',0);c.restore();
+  if(G.menu!=='opt'){c.save();c.translate(600,276);c.rotate(Math.sin(G.rt*2)*0.02);rr(c,-215,-23,430,46,23);fst(c,'#d63b3b',4);txt(c,'¡CACERÍA DE PATOS!',0,2,26,'#fff','center',0);c.restore();}
   drawButtons(c);
   txt(c,'RÉCORD  '+fmt(G.hi),40,40,26,'#ffe36e','left',5);if(ONL.p&&ONL.p[0])txt(c,'🌍 MUNDIAL  '+ONL.p[0].n+'  '+fmt(ONL.p[0].s),40,76,22,'#9fe0ff','left',4);
   if(NET.code&&(NET.status==='ready'||NET.status==='linked'))txt(c,NET.status==='linked'?(netCount()>1?'2 MÓVILES CONECTADOS':'MÓVIL CONECTADO · CÓDIGO '+NET.code):'CÓDIGO MÓVIL: '+NET.code,W-40,40,24,NET.status==='linked'?'#7CFF6B':'#9fe0ff','right',5);
-  txt(c,'RATÓN / TÁCTIL   ·   MANDO TV: FLECHAS + OK   ·   MÓVIL COMO PISTOLA',640,700,19,'#fff','center',4);
+  if(G.menu==='opt')txt(c,verTxt().toUpperCase(),640,702,19,'#cfe0ff','center',4);else txt(c,'RATÓN / TÁCTIL   ·   MANDO TV: FLECHAS + OK   ·   MÓVIL COMO PISTOLA',640,700,19,'#fff','center',4);
 }
 function drawBanner(c){var b=G.banner;if(!b)return;var k=b.t,s=k<0.3?easeOutBack(k/0.3):(k>b.dur-0.25?Math.max(0,(b.dur-k)/0.25):1);
   c.save();c.translate(640,180);c.scale(s,s);c.rotate(Math.sin(G.rt*3)*0.02);rr(c,-390,-64,780,b.sub?152:128,32);fs(c,'rgba(10,14,30,.6)');
@@ -1533,7 +1533,7 @@ var PLATE={geo:null,mat:null,gold:null,inv:null,pool:[]};
 function plateMats(){
   if(!PLATE.geo){PLATE.geo=new THREE.CylinderGeometry(0.34,0.26,0.1,24);PLATE.mat=new THREE.MeshStandardMaterial({color:C('#ff6a12'),roughness:0.5});
     PLATE.gold=new THREE.MeshStandardMaterial({color:C('#ffcc33'),metalness:0.85,roughness:0.22,emissive:C('#8a5a00'),emissiveIntensity:0.75});
-    PLATE.inv=new THREE.MeshStandardMaterial({color:C('#d8f2ff'),metalness:0.2,roughness:0.15,emissive:C('#9fe8ff'),emissiveIntensity:0.4,transparent:true,opacity:0.1,depthWrite:false});}
+    PLATE.inv=new THREE.MeshStandardMaterial({color:C('#d8f2ff'),metalness:0.2,roughness:0.15,emissive:C('#9fe8ff'),emissiveIntensity:0.9,transparent:true,opacity:0.3,depthWrite:false});}
   return [PLATE.mat,PLATE.gold,PLATE.inv];
 }
 function takePlate(){
@@ -1556,7 +1556,7 @@ Plate.prototype.screen=function(o){return toScreen(this.p,o);};
 Plate.prototype.update=function(dt){
   if(this.freed)return;if(this.delay>0){this.delay-=dt;if(this.delay<=0){S('whoosh');if(this.kind==='oro'){toast('¡PLATO DORADO! x5 PUNTOS');S('sparkle');}else if(this.kind==='inv')toast('¡PLATO INVISIBLE!');}return;}
   this.mesh.visible=true;this.t+=dt;this.st+=dt;
-  if(this.kind==='inv'){var w=Math.sin(this.t*5.2+this.ph);this.mesh.material.opacity=0.035+0.6*Math.pow(Math.max(0,w),6);}
+  if(this.kind==='inv'){var w=Math.sin(this.t*6+this.ph);this.mesh.material.opacity=0.24+0.66*Math.pow(Math.max(0,w),3);if(Math.random()<dt*7)sparks3(this.p,1,'#d8f6ff');}
   else if(this.kind==='oro'&&Math.random()<dt*22)sparks3(this.p,1,'#ffe27a');
   if(this.state==='fly'){this.v.y-=7*this.k*this.k*dt;this.p.addScaledVector(this.v,dt);this.mesh.position.copy(this.p);this.mesh.rotation.set(0.35+Math.sin(this.t*2)*0.1,this.t*this.spin,this.v.x>0?-0.2:0.2);
     if(this.p.y<-0.4&&this.v.y<0)escapeDuck(this);}
@@ -2128,17 +2128,18 @@ function toggleFs(){FS_AUTO=!FS_AUTO;lsSet('pl3_fs',FS_AUTO?'1':'0');if(FS_AUTO)
 function installApp(){if(!INST)return;INST.prompt();INST.userChoice.then(function(){INST=null;layoutButtons();}).catch(function(){});}
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();INST=e;if(renderer)layoutButtons();});
 window.addEventListener('appinstalled',function(){INST=null;toast('¡APP INSTALADA!');layoutButtons();});
-if('serviceWorker' in navigator&&(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+if('serviceWorker' in navigator&&(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))){window.addEventListener('load',function(){var had=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(r){try{r.update();}catch(e){}}).catch(function(){});navigator.serviceWorker.addEventListener('controllerchange',function(){if(had&&!UPD.swr){UPD.swr=1;UPD.next=UPD.next||'sw';if(updSafe())updApply();}});});}
 /* ---------- actualizaciones automáticas ----------
    Al abrir el juego (y de vez en cuando) mira version.json en el servidor.
    Si hay una versión más nueva, borra lo guardado y recarga, pero nunca a mitad de partida. */
-var UPD={busy:false,last:0,next:null,t0:Date.now()};
+var UPD={busy:false,last:0,next:null,t0:Date.now(),hid:0,resume:false};
 function ssGet(k){try{return sessionStorage.getItem(k);}catch(e){return null;}}
 function ssSet(k,v){try{sessionStorage.setItem(k,v);}catch(e){}}
 function updSafe(){
   if(phoneMode)return !(PH.conn&&PH.conn.open);
   if(!READY)return true;
-  return G.phase==='title'&&!nameOpen&&!NET.slots[0]&&!NET.slots[1];
+  if(nameOpen||NET.slots[0]||NET.slots[1])return false;
+  return G.phase==='title'||G.phase==='over'||UPD.resume||G.paused;
 }
 function updCheck(force){
   if(UPD.busy||!/^https?:$/.test(location.protocol)||PL_VER.indexOf('PLVER')>=0||!window.fetch)return;
@@ -2156,12 +2157,27 @@ function updApply(){
   var p=[];
   try{if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.map(function(k){return caches.delete(k);}));}));}catch(e){}
   try{if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistration().then(function(r){return r&&r.update();}));}catch(e){}
-  var go=function(){var q=location.search.replace(/[?&]v=[^&]*/g,'').replace(/^&/,'?');q=(q?q+'&':'?')+'v='+v;location.replace(location.pathname+q+location.hash);};
+  var go=function(){var q=location.search.replace(/[?&]v=[^&]*/g,'').replace(/^&/,'?');q=(q?q+'&':'?')+'v='+(v==='sw'?Date.now():v);location.replace(location.pathname+q+location.hash);};
   Promise.all(p).then(function(){setTimeout(go,READY?1200:250);},function(){setTimeout(go,READY?1200:250);});
 }
 updCheck(true);
 setInterval(function(){if(UPD.next&&updSafe())updApply();else updCheck(false);},20000);
-document.addEventListener('visibilitychange',function(){if(!document.hidden)updCheck(false);});
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){UPD.hid=Date.now();return;}
+  if(UPD.hid&&Date.now()-UPD.hid>5*60000){UPD.resume=true;setTimeout(function(){UPD.resume=false;},30000);updCheck(true);}else updCheck(false);
+  try{navigator.serviceWorker.getRegistration().then(function(r){if(r)r.update();});}catch(e){}});
+window.addEventListener('pageshow',function(e){if(e.persisted){UPD.resume=true;setTimeout(function(){UPD.resume=false;},30000);updCheck(true);}});
+/* botón de Opciones: buscar actualización ahora */
+function updManual(){
+  if(!window.fetch||!/^https?:$/.test(location.protocol)){toast('NO SE PUEDE COMPROBAR AQUÍ');return;}
+  toast('BUSCANDO ACTUALIZACIONES…');
+  try{navigator.serviceWorker.getRegistration().then(function(r){if(r)r.update();});}catch(e){}
+  fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(j){
+    if(!j||!j.v){toast('NO SE PUDO COMPROBAR');return;}
+    if(PL_VER.indexOf('PLVER')<0&&String(j.v)<=PL_VER){toast('YA TIENES LA ÚLTIMA VERSIÓN');S('pop');return;}
+    UPD.next=String(j.v);S('sparkle');updApply();
+  }).catch(function(){toast('SIN CONEXIÓN: PRUEBA MÁS TARDE');});
+}
 function lockLand(){try{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){});}catch(e){}}
 function goFull(){
   if(isFull()){lockLand();return;}
