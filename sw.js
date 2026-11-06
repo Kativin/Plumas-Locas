@@ -1,7 +1,7 @@
 /* Plumas Locas: permite instalar el juego como app y abrirlo sin internet.
    Siempre pregunta al servidor si hay algo nuevo; si no hay conexión, usa lo guardado.
    El nombre de la caché lleva la versión: build.sh lo cambia solo en cada compilación. */
-var CACHE = 'plumas-locas-20261105210934';
+var CACHE = 'plumas-locas-20261106232115';
 var FILES = ['./', 'index.html', 'plumas-locas.html', 'three.min.js', 'peerjs.min.js', 'qrcode.min.js', 'ranking-online.js',
   'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
